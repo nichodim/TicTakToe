@@ -1,3 +1,3 @@
 export function Title({ turn }) {
-    return <h1 className={turn + 'Color'} >Tick Tack Toe</h1>; 
+    return <h1 className={turn + 'Color'} >Tic Tak Toe</h1>; 
 }
