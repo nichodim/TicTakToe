@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Row } from './Row'
+import { Board } from './Board'
+import { Title } from './Title'
+import { GameTag } from './GameTag'
 import './App.css'
 
 function App() {
-    const [rows, setRows] = useState(() => 3); 
+    const [rows, setRows] = useState(() => 10); 
+    const [turn, setTurn] = useState(() => 'circle'); 
     const [tics, setTics] = useState(Array(rows).fill(Array(rows).fill('none'))); 
 
     useEffect(() => console.log(tics), [tics]); 
 
     return (
         <>
-            <h1>Tick Tack Toe</h1>
-            <div className="container">
-                {tics.map(row => {
-                    return <Row tics={row.map(tic => tic)} key={crypto.randomUUID()} />; 
-                })}
+            <Title turn={turn} />
+            <div id="tagContainer">
+                <GameTag rows={rows} />
             </div>
+            <Board tics={tics} />
         </>
     ); 
 }
