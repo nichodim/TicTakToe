@@ -7,8 +7,8 @@ export function Tile({ tic, handleClick }) {
                 </svg>
             }
             {tic.type == 'circle' && 
-                <svg height="100" width="100">
-                    <circle cx="50" cy="45" r="26" stroke="#3236ff" stroke-width="8" fill="rgb(0, 11, 41)" />
+                <svg height="55" width="55">
+                    <circle cx="27.5" cy="27" r="24" stroke="#3236ff" stroke-width="8" fill="rgb(0, 11, 41)" />
                 </svg>
             }
         </button>
