@@ -5,7 +5,7 @@ import { GameTag } from './GameTag'
 import './App.css'
 
 function App() {
-    const [rows, setRows] = useState(() => 4); 
+    const [rows, setRows] = useState(() => 3); 
     const [turn, setTurn] = useState(() => 'ex'); 
     const [tics, setTics] = useState(Array(rows).fill(Array(rows).fill({ type: "none", key: undefined }))); 
 
@@ -37,15 +37,12 @@ function App() {
         if (tics[rowNum][colNum].type != 'none') return; 
 
         setTics(prevTics => {
-            return [
-                ...prevTics.slice(0, rowNum), 
-                [
-                    ...prevTics[rowNum].slice(0, colNum), 
-                    {...prevTics[rowNum][colNum], type: turn}, 
-                    ...prevTics[rowNum].slice(colNum + 1, prevTics[rowNum].length)
-                ], 
-                ...prevTics.slice(rowNum + 1, prevTics.length)
-            ]; 
+            return prevTics.map(row => {
+                return row.map(tile => {
+                    if (tile.key == key) return {...tile, type: turn}; 
+                    else return tile; 
+                })
+            })
         }); 
 
         setTurn(prevTurn => {
