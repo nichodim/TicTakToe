@@ -1,5 +1,5 @@
-export function Tile() {
+export function Tile({ tic, handleClick }) {
     return (
-        <button className="tile" type="button"></button>
+        <button className="tile" type="button" onClick={e => handleClick(e, tic.key)}>{tic.key}</button>
     ); 
 }
