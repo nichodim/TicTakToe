@@ -18,17 +18,33 @@ h1 {
     display: flex;   
     height: 100px; 
 }
-.tile {
-    border: 4px solid rgb(203, 245, 255); 
+
+.tile-none {
+    border: 4px solid rgba(203, 245, 255, 0.678); 
     color:rgb(203, 245, 255); 
     background-color: rgb(0, 25, 41); 
     flex: 1; 
     transition: 0.3s;
     cursor: pointer;
 }
-.tile:hover {
+.tile-none:hover {
     background-color: rgb(0, 59, 95); 
 }
+.tile-ex {
+    border: 4px solid #e24569; 
+    color:#e24569; 
+    background-color: rgb(41, 0, 3); 
+    flex: 1; 
+    transition: 0.3s;
+}
+.tile-circle {
+    border: 4px solid #3236ff; 
+    color:#3236ff; 
+    background-color: rgb(0, 11, 41); 
+    flex: 1; 
+    transition: 0.3s;
+}
+
 
 .exColor {
     color: #e24569; 

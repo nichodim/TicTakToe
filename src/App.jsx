@@ -5,7 +5,7 @@ import { GameTag } from './GameTag'
 import './App.css'
 
 function App() {
-    const [rows, setRows] = useState(() => 3); 
+    const [rows, setRows] = useState(() => 5); 
     const [turn, setTurn] = useState(() => 'ex'); 
     const [tics, setTics] = useState(Array(rows).fill(Array(rows).fill({ type: "none", key: undefined }))); 
 
