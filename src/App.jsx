@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
+import { Menu } from './Menu'
 import { Board } from './Board'
 import { Title } from './Title'
 import { GameTag } from './GameTag'
 import './App.css'
 
 function App() {
-    const [rows, setRows] = useState(() => 8); 
+    const [started, setStart] = useState(() => false); 
+    const [rows, setRows] = useState(3); 
     const [turn, setTurn] = useState(() => 'ex'); 
     const [tics, setTics] = useState(Array(rows).fill(Array(rows).fill({ type: "none", key: undefined }))); 
 
     // Give all tics unqiue keys
+    useEffect(() => console.log(rows), [rows]); 
     useEffect(() => {
+        console.log(tics); 
         if (tics[0][0].key != undefined) return; 
         for (let i = 0; i < tics.length; i++) {
             for (let j = 0; j < tics[0].length; j++) {
@@ -27,9 +31,20 @@ function App() {
                 }); 
             }
         }
-    }, []); 
+    }, [tics]); 
 
-    useEffect(() => console.log(tics), [tics]); 
+    function setMenu() {
+        let newRows = document.getElementById('rowBox').value; 
+        if (newRows == '' || isNaN(newRows) || newRows < 1 || newRows > 10) {
+            alert('Invalid row number (1-10)'); 
+            return; 
+        }
+        newRows = parseInt(newRows); 
+
+        setTics(() => Array(newRows).fill(Array(newRows).fill({ type: "none", key: undefined }))); 
+        setRows(() => newRows);  
+        setStart(() => true); 
+    }
 
     function fliptile(e, key) {
         const rowNum = key.substring(0, 1); 
@@ -53,11 +68,18 @@ function App() {
 
     return (
         <>
-            <Title turn={turn} />
+            <Title turn={turn} started={started} />
             <div id="tagContainer">
-                <GameTag rows={rows} />
+                {!started &&
+                    <Menu setMenu={setMenu} />
+                }
+                {started && 
+                    <GameTag rows={rows} />
+                }
             </div>
-            <Board tics={tics} handleClick={fliptile} />
+            {started && 
+                <Board tics={tics} handleClick={fliptile} />
+            }
         </>
     ); 
 }
