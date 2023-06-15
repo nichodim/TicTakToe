@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Menu } from './Menu'
+import { End } from './End'
 import { Reset } from './Reset'
 import { Board } from './Board'
 import { Title } from './Title'
@@ -11,11 +12,13 @@ function App() {
     const [rows, setRows] = useState(3); 
     const [turn, setTurn] = useState(() => 'ex'); 
     const [tics, setTics] = useState(Array(rows).fill(Array(rows).fill({ type: "none", key: undefined }))); 
+    const [ended, setEnd] = useState(() => 'none'); 
 
-    // Give all tics unqiue keys
-    useEffect(() => console.log(rows), [rows]); 
     useEffect(() => {
-        console.log(tics); 
+        //console.log(tics); 
+        checkBoard(); 
+
+        // Give all tics unqiue keys
         if (tics[0][0].key != undefined) return; 
         for (let i = 0; i < tics.length; i++) {
             for (let j = 0; j < tics[0].length; j++) {
@@ -33,6 +36,7 @@ function App() {
             }
         }
     }, [tics]); 
+    useEffect(() => console.log(ended), [ended]); 
 
     function setMenu() {
         let newRows = document.getElementById('rowBox').value; 
@@ -47,12 +51,48 @@ function App() {
         setStart(() => true); 
     }
 
+    function checkBoard() {
+        function checkForEnd(i, j) {
+            if (tics[i][j].type != active) {
+                active = tics[i][j].type; 
+                count = 1; 
+            } else {
+                count++; 
+            }
+
+            if (count == rows && active != 'none') {
+                setEnd(() => active); 
+                return true; 
+            }
+            return false; 
+        }
+        let active = ''; 
+        let count = 0; 
+
+        // Checks for horizontal win
+        for (let i = 0; i < tics.length; i++) {
+            for (let j = 0; j < tics[0].length; j++) {
+                if (checkForEnd(i, j)) return; 
+            } 
+        }
+        active = ''; 
+
+        // Checks for vertical win
+        for (let i = 0; i < tics[0].length; i++) {
+            for (let j = 0; j < tics.length; j++) {
+                if (checkForEnd(j, i)) return; 
+            }
+        }
+        active = ''; 
+    }
+
     function resetState() {
+        setEnd(() => 'none'); 
         setStart(() => false); 
         setTurn(() => 'ex'); 
     }
 
-    function fliptile(e, key) {
+    function flipTile(e, key) {
         const rowNum = key.substring(0, 1); 
         const colNum = key.substring(2, 3); 
         if (tics[rowNum][colNum].type != 'none') return; 
@@ -82,12 +122,15 @@ function App() {
                 {!started &&
                     <Menu setMenu={setMenu} />
                 }
-                {started && 
+                {(started && ended == 'none') && 
                     <GameTag rows={rows} />
                 }
+                {ended != 'none' &&
+                    <End condition={ended} />
+                }
             </div>
-            {started && 
-                <Board tics={tics} handleClick={fliptile} />
+            {(started && ended == 'none') && 
+                <Board tics={tics} handleClick={flipTile} />
             }
         </>
     ); 
