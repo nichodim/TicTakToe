@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Menu } from './Menu'
+import { Reset } from './Reset'
 import { Board } from './Board'
 import { Title } from './Title'
 import { GameTag } from './GameTag'
@@ -46,6 +47,11 @@ function App() {
         setStart(() => true); 
     }
 
+    function resetState() {
+        setStart(() => false); 
+        setTurn(() => 'ex'); 
+    }
+
     function fliptile(e, key) {
         const rowNum = key.substring(0, 1); 
         const colNum = key.substring(2, 3); 
@@ -69,6 +75,9 @@ function App() {
     return (
         <>
             <Title turn={turn} started={started} />
+            {started && 
+                <Reset handleClick={resetState} />
+            }
             <div id="tagContainer">
                 {!started &&
                     <Menu setMenu={setMenu} />

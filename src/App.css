@@ -78,12 +78,31 @@ h1 {
     color:rgb(203, 245, 255); 
     background-color: rgb(0, 25, 41); 
     font-size: 55px; 
+    font-weight: bold; 
     transition: 0.3s;
     padding: 20px; 
     cursor: pointer;
 }
 #playButton:hover {
-    border: 4px solid #e24569; 
+    border: 4px solid #3236ff; 
+    background-color: rgb(0, 11, 41); 
+    color: #3236ff; 
+}
+
+#resetButton {
+    border: 3px solid rgb(203, 245, 255); 
+    color:rgb(203, 245, 255); 
+    background-color: rgb(0, 25, 41); 
+    padding: 20px; 
+    font-size: 30px; 
+    cursor: pointer;
+    position: absolute; 
+    transition: 0.3s; 
+    top: 55px; 
+    right: 40px; 
+}
+#resetButton:hover {
+    border: 3px solid #e24569; 
     background-color: rgb(41, 0, 3); 
     color: #e24569; 
 }
