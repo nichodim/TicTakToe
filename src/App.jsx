@@ -15,7 +15,7 @@ function App() {
     const [ended, setEnd] = useState(() => 'none'); 
 
     useEffect(() => {
-        //console.log(tics); 
+        console.log(tics); 
         checkBoard(); 
 
         // Give all tics unqiue keys
@@ -36,7 +36,7 @@ function App() {
             }
         }
     }, [tics]); 
-    useEffect(() => console.log(ended), [ended]); 
+    useEffect(() => console.log(), [ended]); 
 
     function setMenu() {
         let newRows = document.getElementById('rowBox').value; 
@@ -52,6 +52,9 @@ function App() {
     }
 
     function checkBoard() {
+        let active = ''; 
+        let count = 0; 
+
         function checkForEnd(i, j) {
             if (tics[i][j].type != active) {
                 active = tics[i][j].type; 
@@ -66,8 +69,6 @@ function App() {
             }
             return false; 
         }
-        let active = ''; 
-        let count = 0; 
 
         // Checks for horizontal win
         for (let i = 0; i < tics.length; i++) {
@@ -84,6 +85,14 @@ function App() {
             }
         }
         active = ''; 
+
+        // Checks for diagonal win (default win)
+        for (let i = 0; i < tics.length; i++) {
+            if (checkForEnd(i, i)) return; 
+        }
+        for (let i = 0; i < tics.length; i++) {
+            if (checkForEnd(tics.length - i - 1, i)) return; 
+        }
     }
 
     function resetState() {
