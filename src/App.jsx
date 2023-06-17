@@ -54,15 +54,14 @@ function App() {
     function checkBoard() {
         let active = ''; 
         let count = 0; 
+        let noneNum = 0; 
 
         function checkForEnd(i, j) {
             if (tics[i][j].type != active) {
                 active = tics[i][j].type; 
                 count = 1; 
-            } else {
-                count++; 
-            }
-
+            } else count++; 
+            if (active == 'none') noneNum++; 
             if (count == rows && active != 'none') {
                 setEnd(() => active); 
                 return true; 
@@ -74,29 +73,25 @@ function App() {
         for (let i = 0; i < tics.length; i++) {
             for (let j = 0; j < tics[0].length; j++) {
                 if (checkForEnd(i, j)) return; 
-            } 
-            active = ''; 
-        }
-        active = ''; 
+            } active = ''; 
+        } active = ''; 
 
         // Checks for vertical win
         for (let i = 0; i < tics[0].length; i++) {
             for (let j = 0; j < tics.length; j++) {
                 if (checkForEnd(j, i)) return; 
-            }
-            active = ''; 
-        }
-        active = ''; 
+            } active = ''; 
+        } active = ''; 
 
-        // Checks for diagonal win (default win)
+        // Checks for diagonal wins (default win)
         for (let i = 0; i < tics.length; i++) {
             if (checkForEnd(i, i)) return; 
-        }
-        active = ''; 
-
+        } active = ''; 
         for (let i = 0; i < tics.length; i++) {
             if (checkForEnd(tics.length - i - 1, i)) return; 
-        }
+        } active = ''; 
+        
+        if (noneNum == 0) setEnd(() => 'stalemate'); 
     }
 
     function resetState() {
