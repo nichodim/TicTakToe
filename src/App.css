@@ -107,6 +107,14 @@ h1 {
     color: #e24569; 
 }
 
+#endDiv {
+    margin-top: 75px; 
+}
+#endText {
+    margin-top: 50px; 
+    font-size: 40px; 
+}
+
 .menuText {
     font-size: 35px; 
     font-weight: bold; 

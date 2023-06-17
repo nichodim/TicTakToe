@@ -15,7 +15,7 @@ function App() {
     const [ended, setEnd] = useState(() => 'none'); 
 
     useEffect(() => {
-        console.log(tics); 
+        // console.log(tics); 
         checkBoard(); 
 
         // Give all tics unqiue keys
@@ -75,6 +75,7 @@ function App() {
             for (let j = 0; j < tics[0].length; j++) {
                 if (checkForEnd(i, j)) return; 
             } 
+            active = ''; 
         }
         active = ''; 
 
@@ -83,6 +84,7 @@ function App() {
             for (let j = 0; j < tics.length; j++) {
                 if (checkForEnd(j, i)) return; 
             }
+            active = ''; 
         }
         active = ''; 
 
@@ -90,6 +92,8 @@ function App() {
         for (let i = 0; i < tics.length; i++) {
             if (checkForEnd(i, i)) return; 
         }
+        active = ''; 
+
         for (let i = 0; i < tics.length; i++) {
             if (checkForEnd(tics.length - i - 1, i)) return; 
         }
@@ -123,7 +127,7 @@ function App() {
 
     return (
         <>
-            <Title turn={turn} started={started} />
+            <Title turn={turn} started={started} ended={ended} />
             {started && 
                 <Reset handleClick={resetState} />
             }
